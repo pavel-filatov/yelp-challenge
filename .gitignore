@@ -1,0 +1,7 @@
+.idea
+data/
+data_samples/
+derby.log
+*.pdf
+target/
+metastore_db/
