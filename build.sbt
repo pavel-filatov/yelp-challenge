@@ -4,6 +4,11 @@ version := "0.1"
 
 scalaVersion := "2.11.12"
 
+resolvers ++= Seq(
+  "Typesafe" at "http://repo.typesafe.com/typesafe/releases/",
+  "Java.net Maven2 Repository" at "http://download.java.net/maven/2/"
+)
+
 libraryDependencies ++= {
   val sparkVersion = "2.4.1"
   Seq(
