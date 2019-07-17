@@ -4,8 +4,13 @@ Project to demonstrate basic data engineering skills.
 
 ## How to Use It (The Easy Path)
 
-1. Download the [Yelp dataset](https://www.yelp.com/dataset/documentation/main).
-2. Run bash script to download the Docker image and got prepared to the work:
+1. Clone the repository:
+    ```bash
+    git clone git@github.com:pavel-filatov/yelp-challenge.git
+    ```
+    ... or download just a single bash script [run_docker_and_prepare_environment.sh](/run_docker_and_prepare_environment.sh).
+2. Download the [Yelp dataset](https://www.yelp.com/dataset/documentation/main).
+3. Run bash script to download the Docker image and got prepared to the work:
    ```bash
    bash run_docker_and_prepare_environment.sh </yelp/data/directory/path.tar>
    ``` 
@@ -17,7 +22,7 @@ Project to demonstrate basic data engineering skills.
    
    Note that Docker image used there (`pfilatov/spark-cassandra`) will be downloaded if
    not presented in the Docker scope.
-3. Inside a container, run:
+4. Inside a container, run:
     ```bash
     bash ingest_yelp_data_into_cassandra.sh
     ```
@@ -33,10 +38,10 @@ Project to demonstrate basic data engineering skills.
     This behavior occurs when Cassandra has not ran yet.
     Please be patient and run the script a bit later.  
     
-4. Once the ingestion app completed, 
+5. Once the ingestion app completed, 
 you may explore the data within Cassandra unsing `cqlsh`.
-5. To exit the container type `exit`.
-6. To run the container again, use `docker exec -it spark-cassandra bash`.
-7. To stop container (without removing the data), use `docker stop spark-cassandra`.
-8. To start it again, use `docker start spark-cassandra`.
-9. To remove container completely (including the data), use `docker rm -f spark-cassandra`.
+6. To exit the container type `exit`.
+7. To run the container again, use `docker exec -it spark-cassandra bash`.
+8. To stop container (without removing the data), use `docker stop spark-cassandra`.
+9. To start it again, use `docker start spark-cassandra`.
+10. To remove container completely (including the data), use `docker rm -f spark-cassandra`.
