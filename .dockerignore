@@ -1,0 +1,9 @@
+data*
+metastore_db
+*.pdf
+*.md
+*.sbt
+.gitignore
+src
+project
+.idea

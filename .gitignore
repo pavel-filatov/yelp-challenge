@@ -5,3 +5,5 @@ derby.log
 *.pdf
 target/
 metastore_db/
+.DS_Store
+data_samples.tar
