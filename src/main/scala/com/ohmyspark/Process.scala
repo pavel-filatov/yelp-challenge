@@ -4,7 +4,8 @@ import java.sql.Timestamp
 
 import com.ohmyspark.LittleHelpers._
 import org.apache.spark.sql.DataFrame
-import org.apache.spark.sql.functions.{col, regexp_replace, split, struct}
+import org.apache.spark.sql.functions.{col, regexp_replace, split, struct, when}
+import org.apache.spark.sql.types.{ArrayType, IntegerType}
 
 object Process {
 
@@ -30,30 +31,29 @@ object Process {
       }
       .toDF()
 
-
   def processBusiness()(df: DataFrame): DataFrame =
     df.withColumn(
-      "hours",
-      struct(
-        col("hours.Monday").as("monday"),
-        col("hours.Tuesday").as("tuesday"),
-        col("hours.Wednesday").as("wednesday"),
-        col("hours.Thursday").as("thursday"),
-        col("hours.Friday").as("friday"),
-        col("hours.Saturday").as("saturday"),
-        col("hours.Sunday").as("sunday")
+        "hours",
+        struct(
+          col("hours.Monday").as("monday"),
+          col("hours.Tuesday").as("tuesday"),
+          col("hours.Wednesday").as("wednesday"),
+          col("hours.Thursday").as("thursday"),
+          col("hours.Friday").as("friday"),
+          col("hours.Saturday").as("saturday"),
+          col("hours.Sunday").as("sunday")
+        )
       )
-    )
       .withColumn("categories",
-        split(regexp_replace(col("categories"), ",\\s+", ","), ","))
+                  split(regexp_replace(col("categories"), ",\\s+", ","), ","))
 
   def processBusinessAttributes()(df: DataFrame): DataFrame =
     df.select("business_id", "attributes.*")
 
-  def splitElite()(df: DataFrame): DataFrame = {
-    val eliteColName = "elite"
-    df.withColumn(eliteColName,
-      split(col(eliteColName), ",").cast("array<int>"))
-  }
+  def processUser()(df: DataFrame): DataFrame =
+    df.withColumn("elite",
+                  when(col("elite") =!= "",
+                       split(regexp_replace(col("elite"), ",\\s+", ","), ","))
+                    .cast(ArrayType(IntegerType)))
 
 }

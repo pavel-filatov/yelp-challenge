@@ -1,16 +1,13 @@
 package com.ohmyspark
 
-import java.nio.file.{Path, Paths}
+import java.nio.file.Path
 
-import com.ohmyspark.Process.{processBusiness, processBusinessAttributes, processCheckin, processFriend, splitElite}
-import com.ohmyspark.Utils.{getAbsolutePath, readFileWithSchema, saveIntoCassandraKeyspace, applyTransformations}
-import org.apache.log4j.{Level, Logger}
+import com.ohmyspark.Process._
+import com.ohmyspark.Utils.{applyTransformations, getAbsolutePath, readFileWithSchema, saveIntoCassandraKeyspace}
 import org.apache.spark.sql._
 import org.apache.spark.sql.types.StructType
 
 object ProcessYelpData extends ProcessYelpData {
-
-  Logger.getLogger("org").setLevel(Level.OFF)
 
   def main(args: Array[String]): Unit = {
 
@@ -21,7 +18,7 @@ object ProcessYelpData extends ProcessYelpData {
 
     val spark = SparkSession
       .builder()
-      .master("local")
+      .master("local[4]")
       .getOrCreate()
 
     val runner = new ProcessYelpData
@@ -70,7 +67,7 @@ class ProcessYelpData {
 
   lazy val transformations: Map[DataFrameName, List[DataFrame => DataFrame]] = Map(
     "checkin" -> List(processCheckin()),
-    "user" -> List(splitElite()),
+    "user" -> List(processUser()),
     "friend" -> List(processFriend()),
     "business" -> List(processBusiness()),
     "business_attributes" -> List(processBusinessAttributes())
