@@ -1,5 +1,6 @@
 # yelp-challenge
-Project to demonstrate basic data engineering skills
+
+Project to demonstrate basic data engineering skills.
 
 ## How to Use It (The Easy Path)
 
@@ -24,6 +25,13 @@ Project to demonstrate basic data engineering skills
     What this script do:
     1. creates keyspace and tables inside the Cassandra
     2. runs Spark application for data ingestion
+    
+    **IMPORTANT:** This script may fail for several times with the following message:
+    ```bash
+    Connection error: ('Unable to connect to any servers', {'127.0.0.1': error(111, "Tried connecting to [('127.0.0.1', 9042)]. Last error: Connection refused")})
+    ``` 
+    This behavior occurs when Cassandra has not ran yet.
+    Please be patient and run the script a bit later.  
     
 4. Once the ingestion app completed, 
 you may explore the data within Cassandra unsing `cqlsh`.
